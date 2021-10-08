@@ -50,12 +50,19 @@ export default class App extends React.Component {
   
   render() {
     return (
-      <div className='container'>
+      <div className="container">
         <div>Mortgage Calculator</div>
-        <div><input name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/></div>
-        <div><input name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/></div>
+        <div className="form-floating">
+          <input className="form-control form-control-lg" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+          <label htmlFor="balance">Balance</label>
+        </div>
+        <div className="form-floating">
+          <input className="form-control form-control-lg" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+          <label htmlFor="rate">APR</label>
+        </div>
         <div>
-          <select name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+          <label>Term</label>
+          <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
             <option value="15">15</option>
             <option value="30">30</option>
           </select>
