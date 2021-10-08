@@ -4,8 +4,8 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      balance: 100000,
-      rate: 5,
+      balance: 0,
+      rate: 0,
       term: 15,
     }
     this.updateBalance = this.updateBalance.bind(this);
@@ -33,20 +33,25 @@ export default class App extends React.Component {
   }
 
   calculate(stateObject){
-    console.log(stateObject);
     const {balance, rate, term} = stateObject;
-    document.getElementById("output").innerText = "$1945.09 is your payment";
+    let b = balance;
+    let n = term*12;
+    let r = rate/100/12;
+    let x = Math.pow((1+r), n);
+    let M = (b*((r*x)/(x-1))).toFixed(2); 
+    let Payment = M.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    document.getElementById("output").innerText = `$${Payment} is your payment.`;
   }
   
   render() {
     return (
       <div className='container'>
         <div><input name="balance" type="number" value={this.state.balance} onChange={this.updateBalance}/></div>
-        <div><input name="rate" type="number" step=".01" value={this.state.rate} onChange={this.updateRate}/></div>
+        <div><input name="rate" type="number" value={this.state.rate} onChange={this.updateRate}/></div>
         <div>
-          <select name="term" onChange={this.updateTerm}>
-            <option value="15">15</option>
-            <option value="30">30</option>
+          <select type="number" name="term" onChange={this.updateTerm}>
+            <option type="number" value="15">15</option>
+            <option type="number" value="30">30</option>
           </select>
         </div>
         <div><button name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button></div>
