@@ -51,24 +51,54 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <div>Mortgage Calculator</div>
-        <div className="form-floating">
-          <input className="form-control form-control-lg" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
-          <label htmlFor="balance">Balance</label>
+        <div className="row">
+          <div className="col text-center">
+            <h1>Mortgage Calculator</h1>
+          </div>
         </div>
-        <div className="form-floating">
-          <input className="form-control form-control-lg" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
-          <label htmlFor="rate">APR</label>
+        <div className="row">
+          <div className="col-2 text-right align-bottom">
+            <label className="align-bottom" htmlFor="balance">Balance</label>
+          </div>
+          <div className="col-10">
+            <div className="form-floating">
+              <input className="form-control form-control-lg" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Term</label>
-          <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
-            <option value="15">15</option>
-            <option value="30">30</option>
-          </select>
+        <div className="row">
+          <div className="col-2 text-right align-bottom">
+            <label className="align-bottom" htmlFor="rate">APR</label>
+          </div>
+          <div className="col-10">
+            <div className="form-floating">
+              <input className="form-control form-control-lg" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+            </div>
+          </div>
         </div>
-        <div><button name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button></div>
-        <div name="output" id="output"></div>
+        <div className="row">
+          <div className="col-2 text-right align-bottom">
+            <label className="align-bottom" htmlFor="term">Term</label>
+          </div>
+          <div className="col-10">
+            <div className="form-floating">
+              <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+                <option value="15">15</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col text-center">
+            <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col text-center">
+            <div name="output" id="output"></div>
+          </div>
+        </div>
       </div>
     );
   }
