@@ -16,42 +16,48 @@ export default class App extends React.Component {
 
   updateBalance(event){
     this.setState({
-      balance: parseInt(event.target.value),
+      balance: parseFloat(event.target.value),
     });
   }
 
   updateRate(event){
     this.setState({
-      rate: parseInt(event.target.value),
+      rate: parseFloat(event.target.value),
     });
   }
 
   updateTerm(event){
     this.setState({
-      term: parseInt(event.target.value),
+      term: parseFloat(event.target.value),
     });
   }
 
   calculate(stateObject){
     const {balance, rate, term} = stateObject;
-    let b = balance;
-    let n = term*12;
-    let r = rate/100/12;
-    let x = Math.pow((1+r), n);
-    let M = (b*((r*x)/(x-1))).toFixed(2); 
-    let Payment = M.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    document.getElementById("output").innerText = `$${Payment} is your payment.`;
+    if(balance == 0 || rate ==0){
+      document.getElementById("output").innerText = `Please enter a valid rate and balance.`;
+    } else {
+      let b = balance;
+      let n = term*12;
+      let r = rate*.01/12;
+      let x = Math.pow((1+r), n);
+      let M = (b*((r*x)/(x-1))).toFixed(2); 
+      let Payment = M;
+      document.getElementById("output").innerText = `$${Payment} is your payment.`;
+  
+    }
   }
   
   render() {
     return (
       <div className='container'>
-        <div><input name="balance" type="number" value={this.state.balance} onChange={this.updateBalance}/></div>
-        <div><input name="rate" type="number" value={this.state.rate} onChange={this.updateRate}/></div>
+        <div>Mortgage Calculator</div>
+        <div><input name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/></div>
+        <div><input name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/></div>
         <div>
-          <select type="number" name="term" onChange={this.updateTerm}>
-            <option type="number" value="15">15</option>
-            <option type="number" value="30">30</option>
+          <select name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+            <option value="15">15</option>
+            <option value="30">30</option>
           </select>
         </div>
         <div><button name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button></div>
