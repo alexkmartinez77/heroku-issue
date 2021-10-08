@@ -10,17 +10,24 @@ export default class App extends React.Component {
     }
     this.updateBalance = this.updateBalance.bind(this);
     this.updateRate = this.updateRate.bind(this);
+    this.updateTerm = this.updateTerm.bind(this);
   }
 
   updateBalance(event){
     this.setState({
-      balance: event.target.value,
+      balance: parseInt(event.target.value),
     });
   }
 
   updateRate(event){
     this.setState({
-      rate: event.target.value,
+      rate: parseInt(event.target.value),
+    });
+  }
+
+  updateTerm(event){
+    this.setState({
+      term: parseInt(event.target.value),
     });
   }
 
@@ -33,7 +40,7 @@ export default class App extends React.Component {
       <div className='container'>
         <input name="balance" type="number" value={this.state.balance} onChange={this.updateBalance}/>
         <input name="rate" type="number" step=".01" value={this.state.rate} onChange={this.updateRate}/>
-        <select name="term">
+        <select name="term" onChange={this.updateTerm}>
           <option value="15">15</option>
           <option value="30">30</option>
         </select>
