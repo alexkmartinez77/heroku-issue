@@ -50,48 +50,76 @@ export default class App extends React.Component {
   
   render() {
     return (
-      <div className="container p-5 my-5 bg-light border">
-        <div className="row form-group justify-content-center">
-          <div className="col-4 offset-2">
-            <h1>Mortgage Calculator</h1>
+      <div>
+        {/* Calculator Container */}
+        <div className="container p-5 my-5 bg-light border">
+          <div className="row form-group justify-content-center">
+            <div className="col-4 offset-2">
+              <h1>Mortgage Calculator</h1>
+            </div>
+          </div>
+          <div className="row form-group justify-content-center">
+            <div className="col-2 text-right">
+              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
+            </div>
+            <div className="col-4 form-floating">
+                <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+            </div>
+          </div>
+          <div className="row form-group justify-content-center">
+            <div className="col-2 text-right">
+              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
+            </div>
+            <div className="col-4 form-floating">
+                <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+            </div>
+          </div>
+          <div className="row form-group justify-content-center">
+            <div className="col-2 text-right">
+              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
+            </div>
+            <div className="col-4 form-floating">
+                <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                </select>
+            </div>
+          </div>
+          <div className="row form-group justify-content-center">
+            <div className="col-4 offset-2 text-center">
+              <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
+            </div>
+          </div>
+          <div className="row form-group justify-content-center">
+            <div className="col-4 offset-2 text-center">
+              <h4 name="output" id="output"></h4>
+            </div>
           </div>
         </div>
-        <div className="row form-group justify-content-center">
-          <div className="col-2 text-right">
-            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
-          </div>
-          <div className="col-4 form-floating">
-              <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
-          </div>
-        </div>
-        <div className="row form-group justify-content-center">
-          <div className="col-2 text-right">
-            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
-          </div>
-          <div className="col-4 form-floating">
-              <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
-          </div>
-        </div>
-        <div className="row form-group justify-content-center">
-          <div className="col-2 text-right">
-            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
-          </div>
-          <div className="col-4 form-floating">
-              <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
-                <option value="15">15</option>
-                <option value="30">30</option>
-              </select>
-          </div>
-        </div>
-        <div className="row form-group justify-content-center">
-          <div className="col-4 offset-2 text-center">
-            <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
-          </div>
-        </div>
-        <div className="row form-group justify-content-center">
-          <div className="col-4 offset-2 text-center">
-            <h4 name="output" id="output"></h4>
-          </div>
+        {/* Amortization Container */}
+        <div className="container p-5 my-5 bg-light border">
+          <div className="row justify-content-center">
+            <div className="col-4 offset-2">
+              <h1>Amortization Table</h1>
+            </div>
+          </div>  
+          <div className="row">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Payment Date</th>
+                  <th scope="col">Payment</th>
+                  <th scope="col">Principal</th>
+                  <th scope="col">Interest</th>
+                  <th scope="col">Total Interest</th>
+                  <th scope="col">Balance</th>
+                </tr>
+              </thead>
+              <tbody id="amortizationTable">
+
+              </tbody>
+            </table>
+          </div>      
         </div>
       </div>
     );
