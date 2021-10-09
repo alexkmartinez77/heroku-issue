@@ -43,60 +43,54 @@ export default class App extends React.Component {
       let x = Math.pow((1+r), n);
       let M = (b*((r*x)/(x-1))).toFixed(2); 
       let Payment = M;
-      document.getElementById("output").innerText = `$${Payment} is your payment.`;
+      document.getElementById("output").innerText = `$${Payment} is your monthly payment.`;
   
     }
   }
   
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col text-center">
+      <div className="container p-5 my-5 bg-light border">
+        <div className="row form-group justify-content-center">
+          <div className="col-4 offset-2">
             <h1>Mortgage Calculator</h1>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2 text-right align-bottom">
-            <label className="align-bottom" htmlFor="balance">Balance</label>
+        <div className="row form-group justify-content-center">
+          <div className="col-2 text-right">
+            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
           </div>
-          <div className="col-10">
-            <div className="form-floating">
-              <input className="form-control form-control-lg" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
-            </div>
+          <div className="col-4 form-floating">
+              <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2 text-right align-bottom">
-            <label className="align-bottom" htmlFor="rate">APR</label>
+        <div className="row form-group justify-content-center">
+          <div className="col-2 text-right">
+            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
           </div>
-          <div className="col-10">
-            <div className="form-floating">
-              <input className="form-control form-control-lg" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
-            </div>
+          <div className="col-4 form-floating">
+              <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
           </div>
         </div>
-        <div className="row">
-          <div className="col-2 text-right align-bottom">
-            <label className="align-bottom" htmlFor="term">Term</label>
+        <div className="row form-group justify-content-center">
+          <div className="col-2 text-right">
+            <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
           </div>
-          <div className="col-10">
-            <div className="form-floating">
+          <div className="col-4 form-floating">
               <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
                 <option value="15">15</option>
                 <option value="30">30</option>
               </select>
-            </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row form-group">
           <div className="col text-center">
             <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
           </div>
         </div>
-        <div className="row">
+        <div className="row form-group">
           <div className="col text-center">
-            <div name="output" id="output"></div>
+            <h4 name="output" id="output"></h4>
           </div>
         </div>
       </div>
