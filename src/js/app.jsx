@@ -83,13 +83,13 @@ export default class App extends React.Component {
               </select>
           </div>
         </div>
-        <div className="row form-group">
-          <div className="col text-center">
+        <div className="row form-group justify-content-center">
+          <div className="col-4 offset-2 text-center">
             <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
           </div>
         </div>
-        <div className="row form-group">
-          <div className="col text-center">
+        <div className="row form-group justify-content-center">
+          <div className="col-4 offset-2 text-center">
             <h4 name="output" id="output"></h4>
           </div>
         </div>
