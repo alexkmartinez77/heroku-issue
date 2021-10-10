@@ -1,10 +1,10 @@
 import React from 'react';
 
-/*function round(n){
-  return Math.round((n + Number.EPSILON) * 100) / 100
-}*/
 function round(n) {    
   return +(Math.round(n + "e+2")  + "e-2");
+}
+function monetize(money) {
+  return `$${money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
 }
 
 class tableRow extends React.Component{
@@ -64,10 +64,9 @@ export default class App extends React.Component {
       let n = term*12;
       let r = rate*.01/12;
       let x = Math.pow((1+r), n);
-      /*let M = (b*((r*x)/(x-1))).toFixed(2); */
       let M = round((b*((r*x)/(x-1)))); 
-      let Payment = M;
-      document.getElementById("output").innerText = `$${Payment} is your monthly payment.`;
+      let Payment = monetize(M);
+      document.getElementById("output").innerText = `${Payment} is your monthly payment.`;
       this.setState({
         monthlyPayment: M,
       })    
@@ -78,30 +77,24 @@ export default class App extends React.Component {
     let rows = [];
     const {balance, rate, term, monthlyPayment} = this.state;
     const payment = monthlyPayment;
-    let months = term*12;
-    let periodRate = rate*.01/12;
-    let startingBalance = balance;
+    const months = term*12;
+    const periodRate = rate*.01/12;
+    const startingBalance = balance;
 
-    /*var interest = parseFloat((startingBalance*periodRate).toFixed(2));
-    var principal = parseFloat((payment - interest).toFixed(2));*/
     var interest = round(startingBalance*periodRate);
     var principal = round(payment - interest);
     var totalInterest = interest;
     var newBalance = startingBalance-principal;
-    console.log(interest, principal, totalInterest, newBalance);
-      for(let i=1; i <= months; i++){
-            rows.push(<tr key={i}>
-                    <td>{i}</td>
-                    <td>{payment}</td>
-                    <td>{principal}</td>
-                    <td>{interest}</td>
-                    <td>{totalInterest}</td>
-                    <td>{newBalance}</td>
-                  </tr>);
-        /*interest = parseFloat((newBalance*periodRate).toFixed(2));
-        principal = parseFloat((payment - interest).toFixed(2));
-        totalInterest = parseFloat((totalInterest + interest).toFixed(2));
-        newBalance = parseFloat((newBalance - principal).toFixed(2));*/
+
+      for(let i = 1; i <= months; i++){
+        rows.push(<tr key={i}>
+                <td>{i}</td>
+                <td>{monetize(payment)}</td>
+                <td>{monetize(principal)}</td>
+                <td>{monetize(interest)}</td>
+                <td>{monetize(totalInterest)}</td>
+                <td>{monetize(newBalance)}</td>
+              </tr>);
         interest = round(newBalance*periodRate);
         principal = round(payment - interest);
         totalInterest = round(totalInterest + interest);
@@ -110,62 +103,72 @@ export default class App extends React.Component {
     return rows;
 }
 
-
-
-  
-
   render() {
     return (
       <div>
         {/* Calculator Container */}
-        <div className="container p-5 my-5 bg-light border">
-          <div className="row form-group justify-content-center">
-            <div className="col-4 offset-2">
-              <h1>Mortgage Calculator</h1>
+        <div className="container p-5 my-5  border">
+          <div className="row">
+            {/* Left Column */}
+            <div className="col-6 bg-light">
+              <div className="row">
+                <div className="text-center">
+                  <h1>Mortgage Calculator</h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col text-right">
+                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
+                </div>
+                <div className="col">
+                    <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+                </div>
+              </div>
+            <div className="row">
+              <div className="col text-right">
+                <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
+              </div>
+              <div className="col">
+                  <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+              </div>
             </div>
-          </div>
-          <div className="row form-group justify-content-center">
-            <div className="col-2 text-right">
-              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
+            <div className="row">
+              <div className="col text-right">
+                <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
+              </div>
+              <div className="col">
+                  <select className="form-control" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+                    <option value="5">5</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                  </select>
+              </div>
             </div>
-            <div className="col-4 form-floating">
-                <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+            <div className="row form-group justify-content-center">
+              <div className="col text-center">
+                <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
+              </div>
             </div>
-          </div>
-          <div className="row form-group justify-content-center">
-            <div className="col-2 text-right">
-              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
+            <div className="row form-group justify-content-center">
+              <div className="text-center">
+                <h4 name="output" id="output"></h4>
+              </div>
             </div>
-            <div className="col-4 form-floating">
-                <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
             </div>
-          </div>
-          <div className="row form-group justify-content-center">
-            <div className="col-2 text-right">
-              <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
-            </div>
-            <div className="col-4 form-floating">
-                <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
-                  <option value="5">5</option>
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                </select>
-            </div>
-          </div>
-          <div className="row form-group justify-content-center">
-            <div className="col-4 offset-2 text-center">
-              <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
-            </div>
-          </div>
-          <div className="row form-group justify-content-center">
-            <div className="col-4 offset-2 text-center">
-              <h4 name="output" id="output"></h4>
+            {/* Right Column */}
+            <div className="col-6">
+              <div className="row text-center">
+                <h4>Monthly Payments</h4>
+              </div>
+              <div className="row text-center">
+                <h1>{monetize(this.state.monthlyPayment)}</h1>
+              </div>
             </div>
           </div>
         </div>
         {/* Amortization Container */}
         <div className="container p-5 my-5 bg-light border">
-          <div className="row justify-content-center">
+          <div className="row text-center">
               <h1>Amortization Table</h1>
           </div>  
           <div className="row">
