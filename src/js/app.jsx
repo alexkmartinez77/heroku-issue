@@ -1,11 +1,6 @@
 import React from 'react';
+import {round, monetize} from './helperfx.js'
 
-function round(n) {    
-  return +(Math.round(n + "e+2")  + "e-2");
-}
-function monetize(money) {
-  return `$${money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
-}
 
 
 
@@ -27,26 +22,31 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      balance: 165000,
-      rate: 4.5,
+      balance: 0,
+      rate: 0,
       term: 30,
       monthlyPayment: 0,
       totalInterestPaid: 0,
       totalPayments: 0,
     }
+    /*
     this.updateBalance = this.updateBalance.bind(this);
     this.updateRate = this.updateRate.bind(this);
     this.updateTerm = this.updateTerm.bind(this);
+    */
+    this.handleInput = this.handleInput.bind(this);
     this.calculate  = this.calculate.bind(this);
     this.createRows  = this.createRows.bind(this);
+
   }
 
-  updateBalance(event){
+  handleInput(event){
+
     this.setState({
-      balance: parseFloat(event.target.value),
+      [event.target.name]: parseFloat(event.target.value),
     });
   }
-
+/*
   updateRate(event){
     this.setState({
       rate: parseFloat(event.target.value),
@@ -58,7 +58,7 @@ export default class App extends React.Component {
       term: parseFloat(event.target.value),
     });
   }
-
+*/
   calculate(stateObject){
     const {balance, rate, term} = stateObject;
     if(balance == 0 || rate ==0){
@@ -127,7 +127,7 @@ export default class App extends React.Component {
               </div>
               <div className="row">
                 <div className="col-10 offset-1">
-                  <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+                  <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.handleInput}/>
                 </div>
               </div>
               <div className="row text-left mt-3">
@@ -137,7 +137,7 @@ export default class App extends React.Component {
               </div>
               <div className="row">
                 <div className="col-10 offset-1">
-                  <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+                  <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.handleInput}/>
                 </div>
               </div>
               <div className="row text-left mt-3">
@@ -147,7 +147,7 @@ export default class App extends React.Component {
               </div>
               <div className="row">
                 <div className="col-10 offset-1">
-                  <select className="form-control" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+                  <select className="form-control" name="term" defaultValue={this.state.term} onChange={this.handleInput}>
                     <option value="5">5</option>
                     <option value="15">15</option>
                     <option value="30">30</option>
