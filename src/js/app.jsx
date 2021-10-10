@@ -1,7 +1,5 @@
 import React from 'react';
-import {round, monetize} from './helperfx.js'
-
-
+import {round, monetize} from './helperfxs.js'
 
 
 class tableRow extends React.Component{
@@ -29,11 +27,7 @@ export default class App extends React.Component {
       totalInterestPaid: 0,
       totalPayments: 0,
     }
-    /*
-    this.updateBalance = this.updateBalance.bind(this);
-    this.updateRate = this.updateRate.bind(this);
-    this.updateTerm = this.updateTerm.bind(this);
-    */
+
     this.handleInput = this.handleInput.bind(this);
     this.calculate  = this.calculate.bind(this);
     this.createRows  = this.createRows.bind(this);
@@ -41,24 +35,11 @@ export default class App extends React.Component {
   }
 
   handleInput(event){
-
     this.setState({
       [event.target.name]: parseFloat(event.target.value),
     });
   }
-/*
-  updateRate(event){
-    this.setState({
-      rate: parseFloat(event.target.value),
-    });
-  }
 
-  updateTerm(event){
-    this.setState({
-      term: parseFloat(event.target.value),
-    });
-  }
-*/
   calculate(stateObject){
     const {balance, rate, term} = stateObject;
     if(balance == 0 || rate ==0){
@@ -122,7 +103,7 @@ export default class App extends React.Component {
               </div>
               <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
-                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Mortgage Amount</label>
+                  <label htmlFor="balance">Mortgage Amount</label>
                 </div>
               </div>
               <div className="row">
@@ -132,7 +113,7 @@ export default class App extends React.Component {
               </div>
               <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
-                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">Interest Rate Per Year</label>
+                  <label htmlFor="rate">Interest Rate Per Year</label>
                 </div>
               </div>
               <div className="row">
@@ -142,7 +123,7 @@ export default class App extends React.Component {
               </div>
               <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
-                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Mortgage Term In Years</label>
+                  <label htmlFor="term">Mortgage Term In Years</label>
                 </div>
               </div>
               <div className="row">
