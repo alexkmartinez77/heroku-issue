@@ -107,50 +107,56 @@ export default class App extends React.Component {
     return (
       <div>
         {/* Calculator Container */}
-        <div className="container p-5 my-5  border">
+        <div className="container p-5 my-5 border">
           <div className="row">
             {/* Left Column */}
             <div className="col-6 bg-light">
-              <div className="row">
-                <div className="text-center">
-                  <h1>Mortgage Calculator</h1>
+              <div className="row text-center">
+                  <div className="col-12">
+                    <h1>Mortgage Calculator</h1>
+                  </div>
+              </div>
+              <div className="row text-left">
+                <div className="col-10 offset-1">
+                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Mortgage Amount</label>
                 </div>
               </div>
               <div className="row">
-                <div className="col text-right">
-                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Balance</label>
-                </div>
-                <div className="col">
-                    <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
+                <div className="col-10 offset-1">
+                  <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
                 </div>
               </div>
-            <div className="row">
-              <div className="col text-right">
-                <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">APR</label>
+              <div className="row text-left">
+                <div className="col-10 offset-1">
+                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">Interest Rate Per Year</label>
+                </div>
               </div>
-              <div className="col">
+              <div className="row">
+                <div className="col-10 offset-1">
                   <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
+                </div>
               </div>
-            </div>
-            <div className="row">
-              <div className="col text-right">
-                <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Term</label>
+              <div className="row text-left">
+                <div className="col-10 offset-1">
+                  <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Mortgage Term In Years</label>
+                </div>
               </div>
-              <div className="col">
+              <div className="row">
+                <div className="col-10 offset-1">
                   <select className="form-control" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
                     <option value="5">5</option>
                     <option value="15">15</option>
                     <option value="30">30</option>
                   </select>
+                </div>
               </div>
-            </div>
-            <div className="row form-group justify-content-center">
-              <div className="col text-center">
-                <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
+              <div className="row my-5 text-center">
+                <div className="col-12">
+                  <button className="btn btn-primary" name="submit" onClick={() => this.calculate(this.state)}>CALCULATE</button>
+                </div>
               </div>
-            </div>
-            <div className="row form-group justify-content-center">
-              <div className="text-center">
+            <div className="row text-center">
+              <div className="col-12">
                 <h4 name="output" id="output"></h4>
               </div>
             </div>
