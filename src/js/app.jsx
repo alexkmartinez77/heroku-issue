@@ -1,17 +1,40 @@
 import React from 'react';
 
+/*function round(n){
+  return Math.round((n + Number.EPSILON) * 100) / 100
+}*/
+function round(n) {    
+  return +(Math.round(n + "e+2")  + "e-2");
+}
+
+class tableRow extends React.Component{
+  render(){
+    return(
+      <tr>
+        <td></td>
+        <td>{this.props.pay}</td>
+        <td>{this.props.b}</td>
+        <td>{this.props.i}</td>
+        <td>{this.props.tI}</td>
+        <td>{this.props.p}</td>
+      </tr>
+    );
+  }
+}
 export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      balance: 0,
-      rate: 0,
-      term: 15,
+      balance: 165000,
+      rate: 4.5,
+      term: 30,
+      monthlyPayment: 0,
     }
     this.updateBalance = this.updateBalance.bind(this);
     this.updateRate = this.updateRate.bind(this);
     this.updateTerm = this.updateTerm.bind(this);
     this.calculate  = this.calculate.bind(this);
+    this.createRows  = this.createRows.bind(this);
   }
 
   updateBalance(event){
@@ -41,13 +64,56 @@ export default class App extends React.Component {
       let n = term*12;
       let r = rate*.01/12;
       let x = Math.pow((1+r), n);
-      let M = (b*((r*x)/(x-1))).toFixed(2); 
+      /*let M = (b*((r*x)/(x-1))).toFixed(2); */
+      let M = round((b*((r*x)/(x-1)))); 
       let Payment = M;
       document.getElementById("output").innerText = `$${Payment} is your monthly payment.`;
-  
+      this.setState({
+        monthlyPayment: M,
+      })    
     }
   }
+
+  createRows(){
+    let rows = [];
+    const {balance, rate, term, monthlyPayment} = this.state;
+    const payment = monthlyPayment;
+    let months = term*12;
+    let periodRate = rate*.01/12;
+    let startingBalance = balance;
+
+    /*var interest = parseFloat((startingBalance*periodRate).toFixed(2));
+    var principal = parseFloat((payment - interest).toFixed(2));*/
+    var interest = round(startingBalance*periodRate);
+    var principal = round(payment - interest);
+    var totalInterest = interest;
+    var newBalance = startingBalance-principal;
+    console.log(interest, principal, totalInterest, newBalance);
+      for(let i=1; i <= months; i++){
+            rows.push(<tr key={i}>
+                    <td>{i}</td>
+                    <td>{payment}</td>
+                    <td>{principal}</td>
+                    <td>{interest}</td>
+                    <td>{totalInterest}</td>
+                    <td>{newBalance}</td>
+                  </tr>);
+        /*interest = parseFloat((newBalance*periodRate).toFixed(2));
+        principal = parseFloat((payment - interest).toFixed(2));
+        totalInterest = parseFloat((totalInterest + interest).toFixed(2));
+        newBalance = parseFloat((newBalance - principal).toFixed(2));*/
+        interest = round(newBalance*periodRate);
+        principal = round(payment - interest);
+        totalInterest = round(totalInterest + interest);
+        newBalance = round(newBalance - principal);
+      }
+    return rows;
+}
+
+
+
   
+
   render() {
     return (
       <div>
@@ -80,6 +146,7 @@ export default class App extends React.Component {
             </div>
             <div className="col-4 form-floating">
                 <select className="form-select" name="term" defaultValue={this.state.term} onChange={this.updateTerm}>
+                  <option value="5">5</option>
                   <option value="15">15</option>
                   <option value="30">30</option>
                 </select>
@@ -99,12 +166,10 @@ export default class App extends React.Component {
         {/* Amortization Container */}
         <div className="container p-5 my-5 bg-light border">
           <div className="row justify-content-center">
-            <div className="col-4 offset-2">
               <h1>Amortization Table</h1>
-            </div>
           </div>  
           <div className="row">
-            <table class="table">
+            <table className="table">
               <thead>
                 <tr>
                   <th scope="col">Payment Date</th>
@@ -116,7 +181,7 @@ export default class App extends React.Component {
                 </tr>
               </thead>
               <tbody id="amortizationTable">
-
+                {this.createRows()}
               </tbody>
             </table>
           </div>      
