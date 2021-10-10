@@ -107,7 +107,7 @@ export default class App extends React.Component {
     return (
       <div>
         {/* Calculator Container */}
-        <div className="container p-5 my-5 border">
+        <div className="container my-5 border">
           <div className="row">
             {/* Left Column */}
             <div className="col-6 bg-light">
@@ -116,7 +116,7 @@ export default class App extends React.Component {
                     <h1>Mortgage Calculator</h1>
                   </div>
               </div>
-              <div className="row text-left">
+              <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
                   <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="balance">Mortgage Amount</label>
                 </div>
@@ -126,7 +126,7 @@ export default class App extends React.Component {
                   <input className="form-control" name="balance" type="number" defaultValue={this.state.balance} onChange={this.updateBalance}/>
                 </div>
               </div>
-              <div className="row text-left">
+              <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
                   <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="rate">Interest Rate Per Year</label>
                 </div>
@@ -136,7 +136,7 @@ export default class App extends React.Component {
                   <input className="form-control" name="rate" type="number" step=".01" defaultValue={this.state.rate} onChange={this.updateRate}/>
                 </div>
               </div>
-              <div className="row text-left">
+              <div className="row text-left mt-3">
                 <div className="col-10 offset-1">
                   <label style={{padding: "16.25px 0px 6.25px 0px"}} htmlFor="term">Mortgage Term In Years</label>
                 </div>
@@ -163,11 +163,19 @@ export default class App extends React.Component {
             </div>
             {/* Right Column */}
             <div className="col-6">
-              <div className="row text-center">
-                <h4>Monthly Payments</h4>
+              <div className="row text-center mt-4">
+                <div className="col">
+                  <h5>Monthly Payments</h5>
+                </div>
               </div>
-              <div className="row text-center">
+              <div className="row text-center mb-5">
                 <h1>{monetize(this.state.monthlyPayment)}</h1>
+              </div>
+              <div className="row">
+                <div className="col border-bottom m-3">
+                  <span className="pull-left">Total Interest Paid</span>
+                  <span className="pull-right">$135,971.07</span>
+                </div>
               </div>
             </div>
           </div>
