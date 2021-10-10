@@ -7,6 +7,8 @@ function monetize(money) {
   return `$${money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
 }
 
+
+
 class tableRow extends React.Component{
   render(){
     return(
@@ -29,6 +31,8 @@ export default class App extends React.Component {
       rate: 4.5,
       term: 30,
       monthlyPayment: 0,
+      totalInterestPaid: 0,
+      totalPayments: 0,
     }
     this.updateBalance = this.updateBalance.bind(this);
     this.updateRate = this.updateRate.bind(this);
@@ -89,11 +93,11 @@ export default class App extends React.Component {
       for(let i = 1; i <= months; i++){
         rows.push(<tr key={i}>
                 <td>{i}</td>
-                <td>{monetize(payment)}</td>
-                <td>{monetize(principal)}</td>
-                <td>{monetize(interest)}</td>
-                <td>{monetize(totalInterest)}</td>
-                <td>{monetize(newBalance)}</td>
+                <td>{monetize(payment.toFixed(2))}</td>
+                <td>{monetize(principal.toFixed(2))}</td>
+                <td>{monetize(interest.toFixed(2))}</td>
+                <td>{monetize(totalInterest.toFixed(2))}</td>
+                <td>{monetize(newBalance.toFixed(2))}</td>
               </tr>);
         interest = round(newBalance*periodRate);
         principal = round(payment - interest);
@@ -172,9 +176,19 @@ export default class App extends React.Component {
                 <h1>{monetize(this.state.monthlyPayment)}</h1>
               </div>
               <div className="row">
-                <div className="col border-bottom m-3">
-                  <span className="pull-left">Total Interest Paid</span>
-                  <span className="pull-right">$135,971.07</span>
+                <div className="col">
+                  <div className="mx-3">
+                    <span className="pull-left">Total Interest Paid</span>
+                    <span className="pull-right">$135,971.07</span>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <div className="mx-3 border-top">
+                    <span className="pull-left">Total Paid On This Loan</span>
+                    <span className="pull-right">{monetize((this.state.monthlyPayment * this.state.term * 12).toFixed(2))}</span>
+                  </div>
                 </div>
               </div>
             </div>
