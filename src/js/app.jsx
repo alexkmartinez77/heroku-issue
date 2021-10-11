@@ -1,21 +1,6 @@
 import React from 'react';
-import {round, monetize} from './helperfxs.js'
+import {round, monetize, generateRowsArray} from './helperfxs.js'
 
-
-class tableRow extends React.Component{
-  render(){
-    return(
-      <tr>
-        <td></td>
-        <td>{this.props.pay}</td>
-        <td>{this.props.b}</td>
-        <td>{this.props.i}</td>
-        <td>{this.props.tI}</td>
-        <td>{this.props.p}</td>
-      </tr>
-    );
-  }
-}
 export default class App extends React.Component {
   constructor(props){
     super(props);
@@ -26,12 +11,11 @@ export default class App extends React.Component {
       monthlyPayment: 0,
       totalInterestPaid: 0,
       totalPayments: 0,
+      tableRows: [],
     }
 
     this.handleInput = this.handleInput.bind(this);
-    this.calculate  = this.calculate.bind(this);
-    this.createRows  = this.createRows.bind(this);
-
+    this.generateTableRows = this.generateTableRows.bind(this);
   }
 
   handleInput(event){
@@ -49,44 +33,21 @@ export default class App extends React.Component {
       let n = term*12;
       let r = rate*.01/12;
       let x = Math.pow((1+r), n);
-      let M = round((b*((r*x)/(x-1)))); 
-      let Payment = monetize(M);
-      document.getElementById("output").innerText = `${Payment} is your monthly payment.`;
+      let m = round((b*((r*x)/(x-1)))); 
+      document.getElementById("output").innerText = `${monetize(m)} is your monthly payment.`;
+
+      const genRowsObj = generateRowsArray(b,r,m,n);
       this.setState({
-        monthlyPayment: M,
-      })    
+        monthlyPayment: m,
+        totalInterestPaid: parseFloat(genRowsObj.totalInterest),
+        tableRows: genRowsObj.rowsArray,
+      })
     }
   }
 
-  createRows(){
-    let rows = [];
-    const {balance, rate, term, monthlyPayment} = this.state;
-    const payment = monthlyPayment;
-    const months = term*12;
-    const periodRate = rate*.01/12;
-    const startingBalance = balance;
-
-    var interest = round(startingBalance*periodRate);
-    var principal = round(payment - interest);
-    var totalInterest = interest;
-    var newBalance = startingBalance-principal;
-
-      for(let i = 1; i <= months; i++){
-        rows.push(<tr key={i}>
-                <td>{i}</td>
-                <td>{monetize(payment.toFixed(2))}</td>
-                <td>{monetize(principal.toFixed(2))}</td>
-                <td>{monetize(interest.toFixed(2))}</td>
-                <td>{monetize(totalInterest.toFixed(2))}</td>
-                <td>{monetize(newBalance.toFixed(2))}</td>
-              </tr>);
-        interest = round(newBalance*periodRate);
-        principal = round(payment - interest);
-        totalInterest = round(totalInterest + interest);
-        newBalance = round(newBalance - principal);
-      }
-    return rows;
-}
+  generateTableRows(){
+    return this.state.tableRows;
+  }
 
   render() {
     return (
@@ -160,14 +121,14 @@ export default class App extends React.Component {
                 <div className="col">
                   <div className="mx-3">
                     <span className="pull-left">Total Interest Paid</span>
-                    <span className="pull-right">$135,971.07</span>
+                    <span className="pull-right">{monetize((this.state.totalInterestPaid).toFixed(2))}</span>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col">
                   <div className="mx-3 border-top">
-                    <span className="pull-left">Total Paid On This Loan</span>
+                    <span className="pull-left">Total Amount Paid</span>
                     <span className="pull-right">{monetize((this.state.monthlyPayment * this.state.term * 12).toFixed(2))}</span>
                   </div>
                 </div>
@@ -184,16 +145,16 @@ export default class App extends React.Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">Payment Date</th>
-                  <th scope="col">Payment</th>
-                  <th scope="col">Principal</th>
-                  <th scope="col">Interest</th>
-                  <th scope="col">Total Interest</th>
-                  <th scope="col">Balance</th>
+                  <th scope="col" className="text-center">#</th>
+                  <th scope="col" className="text-center">Payment</th>
+                  <th scope="col" className="text-center">Principal</th>
+                  <th scope="col" className="text-center">Interest</th>
+                  <th scope="col" className="text-center">Total Interest</th>
+                  <th scope="col" className="text-center">Balance</th>
                 </tr>
               </thead>
               <tbody id="amortizationTable">
-                {this.createRows()}
+                {this.generateTableRows()}
               </tbody>
             </table>
           </div>      
