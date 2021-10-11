@@ -21,7 +21,7 @@ export function generateRowsArray(b, r, m, n){
   var newBalance = startingBalance-principal;
     for(let i = 1; i <= months; i++){
       rows.push(
-        <tr key={i}>
+        <tr key={i} scope="row">
           <td>{i}</td>
           <td>{monetize(payment.toFixed(2))}</td>
           <td>{monetize(principal.toFixed(2))}</td>
