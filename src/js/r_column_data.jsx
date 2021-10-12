@@ -32,7 +32,7 @@ export class R_Column_Data extends React.Component{
         </div>
         <div className="row text-center mt-5 text-muted px-3">
           <div className="col">
-            Review an <span style={{color: 'blue'}} onClick={() => this.props.showAS()}>amortization schedule</span> to see how much you will be paying in principal and interest over time.
+            Review an <a style={{color: 'blue', cursor: 'pointer'}} onClick={() => this.props.showAS()}>amortization schedule</a> to see how much you will be paying in principal and interest over time.
           </div>
         </div>
 
