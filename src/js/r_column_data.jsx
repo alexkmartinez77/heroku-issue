@@ -12,21 +12,21 @@ export class R_Column_Data extends React.Component{
           </div>
         </div>
         <div className="row text-center mb-5">
-          <h1 style={{fontFamily: 'Michroma', fontSize: '2.5em', color:`rgb(${'70, 130, 65'})`}}>{monetize(this.props.mPay)}</h1>
+          <h1 style={{fontFamily: 'Michroma', fontSize: '2em', color:`rgb(${'70, 130, 65'})`}}>{monetize(this.props.mPay)}</h1>
         </div>
         <div className="row">
           <div className="col">
             <div className="mx-3">
-              <span className="pull-left">Total Interest Paid</span>
-              <span className="pull-right">{monetize((this.props.tIntPay).toFixed(2))}</span>
+              <span className="float-end float-sm-start">Total Interest Paid</span>
+              <span className="float-end">{monetize((this.props.tIntPay).toFixed(2))}</span>
             </div>
           </div>
         </div>
         <div className="row">
           <div className="col">
             <div className="mx-3 border-top">
-              <span className="pull-left">Total Amount Paid</span>
-              <span className="pull-right">{monetize((this.props.mPay * this.props.t * 12).toFixed(2))}</span>
+              <span className="float-end float-sm-start">Total Amount Paid</span>
+              <span className="float-end">{monetize((this.props.mPay * this.props.t * 12).toFixed(2))}</span>
             </div>
           </div>
         </div>

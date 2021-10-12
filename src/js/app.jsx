@@ -42,7 +42,7 @@ export default class App extends React.Component {
       let r = rate*.01/12;
       let x = Math.pow((1+r), n);
       let m = round((b*((r*x)/(x-1)))); 
-      document.getElementById("output").innerText = `${monetize(m)} is your monthly payment.`;
+      {/*document.getElementById("output").innerText = `${monetize(m)} is your monthly payment.`;*/}
 
       const genRowsObj = generateRowsArray(b,r,m,n);
       this.setState({

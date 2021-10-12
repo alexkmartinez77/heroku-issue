@@ -22,8 +22,8 @@ export function generateRowsArray(b, r, m, n){
     for(let i = 1; i <= months; i++){
       rows.push(
         <tr key={i} scope="row">
-          <td>{i}</td>
-          <td>{monetize(payment.toFixed(2))}</td>
+          <td className="d-none d-sm-table-cell">{i}</td>
+          <td className="d-none d-sm-table-cell">{monetize(payment.toFixed(2))}</td>
           <td>{monetize(principal.toFixed(2))}</td>
           <td>{monetize(interest.toFixed(2))}</td>
           <td>{monetize(totalInterest.toFixed(2))}</td>

@@ -8,11 +8,11 @@ export class Table extends React.Component{
           <h1>Amortization Table</h1>
       </div>  
       <div className="row">
-        <table className="table table-striped">
+        <table className="table table-striped" style={{width:'100%'}}>
           <thead className="border-top">
             <tr>
-              <th scope="col" className="text-center align-middle">#</th>
-              <th scope="col" className="text-center align-middle">Payment</th>
+              <th scope="col" className="text-center align-middle d-none d-sm-table-cell">#</th>
+              <th scope="col" className="text-center align-middle d-none d-sm-table-cell">Payment</th>
               <th scope="col" className="text-center align-middle">Principal</th>
               <th scope="col" className="text-center align-middle">Interest</th>
               <th scope="col" className="text-center align-middle">Total Interest</th>
