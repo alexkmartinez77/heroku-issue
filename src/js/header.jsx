@@ -5,7 +5,7 @@ export class Header extends React.Component{
     return (
       <div className="row text-center">
         <div className="col-12">
-          <h1>Mortgage Calculator</h1>
+          <h1 style={{fontFamily: 'Lexend Exa', fontSize: '1.75em'}}>Mortgage Calculator</h1>
         </div>
       </div>
     )

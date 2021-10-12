@@ -18,10 +18,12 @@ export default class App extends React.Component {
       totalPayments: 0,
       tableRows: [],
       rightColToggle: false,
+      showAmSch: false,
     }
 
     this.handleInput = this.handleInput.bind(this);
     this.generateTableRows = this.generateTableRows.bind(this);
+    this.showAmSchFx = this.showAmSchFx.bind(this);
   }
 
   handleInput(event){
@@ -47,8 +49,15 @@ export default class App extends React.Component {
         monthlyPayment: m,
         totalInterestPaid: parseFloat(genRowsObj.totalInterest),
         tableRows: genRowsObj.rowsArray,
+        rightColToggle: true,
       })
     }
+  }
+
+  showAmSchFx(){
+    this.setState({
+      showAmSch: !this.state.showAmSch,
+    })
   }
 
   generateTableRows(){
@@ -104,13 +113,12 @@ export default class App extends React.Component {
             </div>
             {/* Right Column */}
             <div className="col-6">
-              {/*<R_Column_Data mPay={this.state.monthlyPayment} tIntPay={this.state.totalInterestPaid} t={this.state.term}/>*/}
-              <R_Column_Logo />
+              {this.state.rightColToggle ? <R_Column_Data mPay={this.state.monthlyPayment} tIntPay={this.state.totalInterestPaid} t={this.state.term} showAS={this.showAmSchFx}/> : <R_Column_Logo />}
             </div>
           </div>
         </div>
         {/* Amortization Container */}
-        <Table renderTable={this.generateTableRows} />
+        {this.state.showAmSch ? <Table renderTable={this.generateTableRows} /> : <div></div>}
       </div>
     );
   }
