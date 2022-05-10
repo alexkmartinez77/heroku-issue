@@ -12,7 +12,7 @@ export default class App extends React.Component {
     this.state = {
       balance: 0,
       rate: 0,
-      term: 30,
+      term: 'Choose a Mortgage Term',
       monthlyPayment: 0,
       totalInterestPaid: 0,
       totalPayments: 0,
@@ -42,7 +42,6 @@ export default class App extends React.Component {
       let r = rate*.01/12;
       let x = Math.pow((1+r), n);
       let m = round((b*((r*x)/(x-1)))); 
-      {/*document.getElementById("output").innerText = `${monetize(m)} is your monthly payment.`;*/}
 
       const genRowsObj = generateRowsArray(b,r,m,n);
       this.setState({
@@ -89,7 +88,7 @@ export default class App extends React.Component {
               <div className="row">
                 <div className="col-10 offset-1">
                   <select className="form-control" name="term" defaultValue={this.state.term} onChange={this.handleInput}>
-                    <option value="5">5</option>
+                    <option disabled>Choose a Mortgage Term</option>
                     <option value="15">15</option>
                     <option value="30">30</option>
                   </select>
